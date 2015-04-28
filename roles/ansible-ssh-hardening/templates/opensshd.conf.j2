@@ -76,7 +76,7 @@ Ciphers {{ciphers_53_default}}
 {% if ssh_server_weak_hmac -%}
 {% if ansible_distribution == 'Ubuntu' and ansible_distribution_version >= '14.04' -%}
 MACs {{macs_66_weak}}
-{% elif (ansible_os_family == 'RedHat' and ansible_distribution_major_version <= '6') or ansible_os_family == 'Oracle Linux' -%}
+{% elif (ansible_os_family == 'RedHat' and ansible_distribution_major_version <= '6') or (ansible_os_family == 'Oracle Linux' and ansible_distribution_major_version <= '6') -%}
 MACs {{macs_53_default}}
 {% elif ansible_distribution == 'Debian' and ansible_distribution_major_version <= '6' -%}
 MACs {{macs_53_default}}
@@ -86,7 +86,7 @@ MACs {{macs_59_weak}}
 {% else %}
 {% if ansible_distribution == 'Ubuntu' and ansible_distribution_version >= '14.04' -%}
 MACs {{macs_66_default}}
-{% elif (ansible_os_family == 'RedHat' and ansible_distribution_major_version <= '6') or ansible_os_family == 'Oracle Linux' -%}
+{% elif (ansible_os_family == 'RedHat' and ansible_distribution_major_version <= '6') or (ansible_os_family == 'Oracle Linux' and ansible_distribution_major_version <= '6') -%}
 MACs {{macs_53_default}}
 {% elif ansible_distribution == 'Debian' and ansible_distribution_major_version <= '6' -%}
 MACs {{macs_53_default}}
