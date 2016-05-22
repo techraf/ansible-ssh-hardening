@@ -15,7 +15,7 @@ This role provides secure ssh-client and ssh-server configurations.
 ## Role Variables
 * ``network_ipv6_enable`` - true if IPv6 is needed
 * ``ssh_client_cbc_required`` - true if CBC for ciphers is required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure ciphers enabled. CBC is a weak alternative. Anything weaker should be avoided and is thus not available.
-* ``ssh_server_cbc_required`` - true if CBC for ciphers is required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure ciphers enabled. CBC is a weak alternative. Anything weaker should be avoided and is thus not available.       
+* ``ssh_server_cbc_required`` - true if CBC for ciphers is required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure ciphers enabled. CBC is a weak alternative. Anything weaker should be avoided and is thus not available.
 * ``ssh_client_weak_hmac`` - true if weaker HMAC mechanisms are required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure HMACs enabled.
 * ``ssh_server_weak_hmac`` - true if weaker HMAC mechanisms are required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure HMACs enabled.
 * ``ssh_client_weak_kex`` - true if weaker Key-Exchange (KEX) mechanisms are required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure KEXs enabled.
@@ -49,7 +49,9 @@ This role provides secure ssh-client and ssh-server configurations.
 
 ## Local Testing
 
-For local testing you can use vagrant and Virtualbox of VMWare to run tests locally. You will have to install Virtualbox and Vagrant on your system. See [Vagrant Downloads](http://downloads.vagrantup.com/) for a vagrant package suitable for your system. For all our tests we use `test-kitchen`. If you are not familiar with `test-kitchen` please have a look at [their guide](http://kitchen.ci/docs/getting-started).
+The preferred way of locally testing the role is to use Docker. You will have to install Docker on your system. See [Get started](https://docs.docker.com/) for a Docker package suitable to for your system.
+
+You can also use vagrant and Virtualbox or VMWare to run tests locally. You will have to install Virtualbox and Vagrant on your system. See [Vagrant Downloads](http://downloads.vagrantup.com/) for a vagrant package suitable for your system. For all our tests we use `test-kitchen`. If you are not familiar with `test-kitchen` please have a look at [their guide](http://kitchen.ci/docs/getting-started).
 
 Next install test-kitchen:
 
@@ -61,6 +63,10 @@ bundle install
 # Fetch tests
 bundle exec thor kitchen:fetch-remote-tests
 
+```
+
+### Testing with Docker
+```
 # fast test on one machine
 bundle exec kitchen test default-ubuntu-1204
 
@@ -72,6 +78,18 @@ bundle exec kitchen create default-ubuntu-1204
 bundle exec kitchen converge default-ubuntu-1204
 ```
 
+### Testing with Virtualbox
+```
+# fast test on one machine
+KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test default-ubuntu-1204
+
+# test on all machines
+KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen test
+
+# for development
+KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen create default-ubuntu-1204
+KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen converge default-ubuntu-1204
+```
 For more information see [test-kitchen](http://kitchen.ci/docs/getting-started)
 
 ## FAQ / Pitfalls
@@ -128,4 +146,4 @@ limitations under the License.
 
 [1]: http://travis-ci.org/hardening-io/ansible-ssh-hardening
 [2]: https://gitter.im/hardening-io/general
-[3]: https://galaxy.ansible.com/list#/roles/4204 
+[3]: https://galaxy.ansible.com/list#/roles/4204
