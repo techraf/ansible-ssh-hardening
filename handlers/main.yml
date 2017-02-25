@@ -1,2 +1,2 @@
 - name: restart sshd
-  searvice: name={{ sshd_service_name }} state=restarted
+  service: name={{ sshd_service_name }} state=restarted
